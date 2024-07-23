@@ -8,7 +8,3 @@ export const generateToken = (data: object) => {
 	const token = sign({ data }, pw, { algorithm: "HS256" });
 	return token;
 };
-
-export function verifyToken(token: string) {
-	return jwt.verify(token, pw);
-}

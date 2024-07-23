@@ -2,8 +2,8 @@ import { Context } from "koa";
 import { UserModel } from "../Models";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { generateToken } from "../functions/create-token";
-import { encrypt } from "../functions/secure-data";
+import { generateToken } from "../utils/Auth/create-token";
+import { encrypt } from "../utils/secure-data";
 
 type userInput = {
 	email: string;

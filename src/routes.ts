@@ -22,7 +22,7 @@ export const router = new Router();
 //AUTH ROUTES
 router.post("/register", register);
 router.post("/login", login);
-router.get("/users/:token", authenticate, getAuthUser);
+router.get("/users/:token", getAuthUser);
 
 //EVENTS ROUTES
 router.get("/events", authenticate, getEvents);
