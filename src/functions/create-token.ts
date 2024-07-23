@@ -2,7 +2,7 @@ import jwt, { sign } from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
 
-const pw = process.env.TOKEN || "YYGGGGGGGGGGG";
+const pw = process.env.JWT_SECRET;
 
 export const generateToken = (data: object) => {
 	const token = sign({ data }, pw, { algorithm: "HS256" });

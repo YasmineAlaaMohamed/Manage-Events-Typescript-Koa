@@ -1,1 +1,4 @@
-export {  getEvents, createEvent, updateEvent, deleteEvent, viewEvent} from "./eventsController";
+export * from "./eventsController";
+export * from "./tagsController";
+export * from "./authController";
+export * from "./commentsController";

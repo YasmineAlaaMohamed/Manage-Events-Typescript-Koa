@@ -1,6 +1,5 @@
 import { Context } from "koa";
 import { EventModel, TagModel, CommentModel } from "../Models";
-import moment from "moment";
 
 type eventInput = {
 	title: string;
@@ -59,7 +58,6 @@ export const createEvent = async (ctx: Context) => {
 
 	try {
 		const requestEventData = ctx.request.body as eventInput;
-		createTagsIfNotExist(requestEventData.tags);
 		const tagObjects = await TagModel.find({
 			name: { $in: requestEventData.tags },
 		});
@@ -85,7 +83,6 @@ export const updateEvent = async (ctx: Context) => {
 		const eventId = ctx.params.id;
 		const requestEventData: any = ctx.request.body as eventInput;
 
-		createTagsIfNotExist(requestEventData.tags);
 		const tagObjects = await TagModel.find({
 			name: { $in: requestEventData.tags },
 		});
@@ -134,6 +131,14 @@ export const viewEvent = async (ctx: Context) => {
 	}
 };
 
+export const getEventTags = async (ctx: Context) => {
+	const { tag } = ctx.params;
+	const tagg = await TagModel.findOne({ name: tag });
+
+	const events = await EventModel.find({ tags: tagg._id });
+	ctx.body = events;
+};
+
 const prepareRequest = (requestEventData: any, tagObjects: any) => {
 	return {
 		title: requestEventData.title,
@@ -144,13 +149,4 @@ const prepareRequest = (requestEventData: any, tagObjects: any) => {
 		date: requestEventData.date,
 		tags: tagObjects,
 	};
-};
-
-const createTagsIfNotExist = (tags: []) => {
-	tags.forEach(async (name) => {
-		const tagExist = await TagModel.findOne({ name });
-		if (!tagExist) {
-			await TagModel.create({ name });
-		}
-	});
 };
